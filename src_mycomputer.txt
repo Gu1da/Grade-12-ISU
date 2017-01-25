@@ -1,0 +1,5 @@
+"C:\\Users\\nicho\\Desktop\\Tech ISU\\MyComputer\\MyComputer\\src\\Component.java"
+"C:\\Users\\nicho\\Desktop\\Tech ISU\\MyComputer\\MyComputer\\src\\ComponentDB.java"
+"C:\\Users\\nicho\\Desktop\\Tech ISU\\MyComputer\\MyComputer\\src\\MemoryBlock.java"
+"C:\\Users\\nicho\\Desktop\\Tech ISU\\MyComputer\\MyComputer\\src\\Menu.java"
+"C:\\Users\\nicho\\Desktop\\Tech ISU\\MyComputer\\MyComputer\\src\\MyComputer.java"
