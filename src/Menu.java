@@ -14,6 +14,7 @@ public class Menu {
     	System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
     }
     
+    ///////
     //May not need
     public boolean checkValid(int num, int low, int high){
     	if(num >= low && num <= high)
