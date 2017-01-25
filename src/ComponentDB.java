@@ -10,7 +10,7 @@
 
 public class ComponentDB {
 
-	public Component[] motherboard;	//Later add user input spots
+	private Component[] motherboard;	//Later add user input spots
 
     public ComponentDB() {
     	motherboard = new Component[10];
@@ -26,6 +26,10 @@ public class ComponentDB {
 	   	
 	   	//all else fails
 	   	return -2;
+    }
+    
+    public void addComponent(String compName, String compBrand, double compSpeed, int compMaxSize, char compType){
+    	motherboard[nextFree()] = new Component(compName, compBrand, compSpeed, compMaxSize, compType);
     }
     
 }

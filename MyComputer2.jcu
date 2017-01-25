@@ -15,19 +15,19 @@
 	</projects>
 	<open_files>
 		<docitem>
-			<path>src\Component.java</path>
+			<path>src\MyComputer.java</path>
 			<source>true</source>
 			<index>0</index>
 			<active>false</active>
 		</docitem>
 		<docitem>
-			<path>src\Menu.java</path>
+			<path>src\ComponentDB.java</path>
 			<source>true</source>
 			<index>1</index>
-			<active>true</active>
+			<active>false</active>
 		</docitem>
 		<docitem>
-			<path>src\ComponentDB.java</path>
+			<path>src\Component.java</path>
 			<source>true</source>
 			<index>2</index>
 			<active>false</active>
@@ -39,10 +39,10 @@
 			<active>false</active>
 		</docitem>
 		<docitem>
-			<path>src\MyComputer.java</path>
+			<path>src\Menu.java</path>
 			<source>true</source>
 			<index>4</index>
-			<active>false</active>
+			<active>true</active>
 		</docitem>
 	</open_files>
 </workspace_user>

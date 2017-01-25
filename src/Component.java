@@ -26,32 +26,32 @@ public class Component {
     }
     
     //For when the user just wants to make a new component but not assign it memory yet.
-    public Component(String nm, String manufacturer, int clock, char componentType) {
-		name = "";
-		brand = "";
-		speed = 0;
-		maxSize = 0;
-		type = ' ';
+    public Component(String nm, String manufacturer, double clock, int storage, char componentType) {
+		name = nm;
+		brand = manufacturer;
+		speed = clock;
+		maxSize = storage;
+		type = componentType;
 		memory = null;
     }
     
     //For when the user just wants to make a new component and assign a memory block to it
-    public Component(String nm, String manufacturer, int clock, char componentType, MemoryBlock block) {
-		name = "";
-		brand = "";
-		speed = 0;
-		maxSize = 0;
-		type = ' ';
+    public Component(String nm, String manufacturer, double clock, int storage, char componentType, MemoryBlock block) {
+		name = nm;
+		brand = manufacturer;
+		speed = clock;
+		maxSize = storage;
+		type = componentType;
 		memory = block;
     }
     
-    //For when the user just wants to make a new component and create/assign memory to it
-    public Component(String nm, String manufacturer, int clock, char componentType, String memName, String memType, int memSize, String memData) {
-		name = "";
-		brand = "";
-		speed = 0;
-		maxSize = 0;
-		type = ' ';
+    //For when the user just wants to make a new component and create/assign memory with it
+    public Component(String nm, String manufacturer, double clock, int storage, char componentType, String memName, String memType, int memSize, String memData) {
+		name = nm;
+		brand = manufacturer;
+		speed = clock;
+		maxSize = storage;
+		type = componentType;
 		memory = new MemoryBlock(memName, memType, memSize, memData);
     }
 }
