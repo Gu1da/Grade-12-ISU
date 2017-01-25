@@ -15,7 +15,7 @@
 	</projects>
 	<open_files>
 		<docitem>
-			<path>src\MyComputer.java</path>
+			<path>src\Component.java</path>
 			<source>true</source>
 			<index>0</index>
 			<active>false</active>
@@ -27,22 +27,58 @@
 			<active>false</active>
 		</docitem>
 		<docitem>
-			<path>src\Component.java</path>
+			<path>src\MemoryBlock.java</path>
 			<source>true</source>
 			<index>2</index>
 			<active>false</active>
 		</docitem>
 		<docitem>
-			<path>src\MemoryBlock.java</path>
+			<path>src\Menu.java</path>
 			<source>true</source>
 			<index>3</index>
 			<active>false</active>
 		</docitem>
 		<docitem>
-			<path>src\Menu.java</path>
+			<path>src\MyComputer.java</path>
 			<source>true</source>
 			<index>4</index>
 			<active>true</active>
 		</docitem>
 	</open_files>
+	<symboltables>
+		<symboltable>
+			<path>src\Component.java.sdk</path>
+			<symbols>
+				<symbol>Component</symbol>
+				<symbol>MemoryBlock</symbol>
+			</symbols>
+		</symboltable>
+		<symboltable>
+			<path>src\ComponentDB.java.sdk</path>
+			<symbols>
+				<symbol>Component</symbol>
+				<symbol>ComponentDB</symbol>
+			</symbols>
+		</symboltable>
+		<symboltable>
+			<path>src\MemoryBlock.java.sdk</path>
+			<symbols>
+				<symbol>MemoryBlock</symbol>
+			</symbols>
+		</symboltable>
+		<symboltable>
+			<path>src\Menu.java.sdk</path>
+			<symbols>
+				<symbol>Menu</symbol>
+			</symbols>
+		</symboltable>
+		<symboltable>
+			<path>src\MyComputer.java.sdk</path>
+			<symbols>
+				<symbol>ComponentDB</symbol>
+				<symbol>Menu</symbol>
+				<symbol>MyComputer</symbol>
+			</symbols>
+		</symboltable>
+	</symboltables>
 </workspace_user>

@@ -3,6 +3,8 @@
 <workspace>
 	<settings>
 		<label>MyComputer</label>
+		<id>24</id>
+		<version>0</version>
 	</settings>
 	<users>
 		<user>
