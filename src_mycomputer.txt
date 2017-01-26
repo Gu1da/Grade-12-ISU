@@ -1,5 +1,0 @@
-"H:\\JCreator LE\\MyProjects\\MyComputer\\src\\Component.java"
-"H:\\JCreator LE\\MyProjects\\MyComputer\\src\\ComponentDB.java"
-"H:\\JCreator LE\\MyProjects\\MyComputer\\src\\MemoryBlock.java"
-"H:\\JCreator LE\\MyProjects\\MyComputer\\src\\Menu.java"
-"H:\\JCreator LE\\MyProjects\\MyComputer\\src\\MyComputer.java"
