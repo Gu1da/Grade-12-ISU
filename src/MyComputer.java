@@ -16,8 +16,10 @@ public class MyComputer {
     	
     	Menu mu = new Menu();
     	
-    	do
+    	do{
     		mu.mainMenu();
-    	while(!mu.getExit());
+    	}while(!mu.getExit());
+    	
+    	System.out.println("\n------------------\nBye!\n------------------");
     }
 }

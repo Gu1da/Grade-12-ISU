@@ -58,14 +58,14 @@ public class MemoryBlock {
 	public String toString(){
 		String str;
 		
-		str = "- - - - - - - - - - - - - - - - - - - -"
+		str = "\n- - - - - - - - - - - - - - - - - - - -"
 			+ "\nMemory Name: " + name
 			+ "\nMemory Filetype: " + fileType
 			+ "\nMemory Size: " + size
 			+ "\nMemory Held"
 			+ "\n-----------\n" 
 			+ data
-			+ "\n- - - - - - - - - - - - - - - - - - - -\n";
+			+ "\n- - - - - - - - - - - - - - - - - - - -";
 			
 			return str;
 	}

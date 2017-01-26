@@ -141,7 +141,7 @@ public class Component {
 	public String toString(){
 		String str;
 		
-		str = "************************************"
+		str = "\n************************************"
 			+ "\nComponent Name: " + name
 			+ "\nCompnent Brand: " + brand
 			+ "\nComponent Speed: " + speed
@@ -153,7 +153,7 @@ public class Component {
 			else
 				str += "\nNo Memory\n";
 			
-			str += "************************************";
+			str += "\n************************************";
 			
 			return str;
 	}
