@@ -4,8 +4,7 @@
  *
  */
  
- 
-import java.util.Scanner;
+ import java.util.Scanner;
 
 public class Menu {
 	Scanner input = new Scanner(System.in);
@@ -15,40 +14,65 @@ public class Menu {
 	public void mainMenu(){
 		int choice;
 		this.clearScreen();
-		//============================================================================================================	   _
-		//=----------------------------------------------------------------------------------------------------------=	  //
-		//=|								Output menu																|=	 //
-		//=|	Needs: toString() one, delete component, delete memory, Edit component, Edit memory1				|=	/-------------------------|
-		//=|	Ask if array needs to be private, and if components in array/their aggregates need to be edited.	|=	\-------------------------|
-		//=----------------------------------------------------------------------------------------------------------=	 \\
-		//============================================================================================================	  \\
-		System.out.println("================================================");//										   -								
+		//====================================================================================================================	   _
+		//=------------------------------------------------------------------------------------------------------------------=	  //
+		//=|								Output menu																		|=	 //
+		//=|	Needs: toString() one, delete component, delete memory, Edit component, Edit memory1						|=	/-------------------------|
+		//=|	Ask if array needs to be private (no), and if components in array/their aggregates need to be edited (yes).	|=	\-------------------------|
+		//=------------------------------------------------------------------------------------------------------------------=	 \\
+		//====================================================================================================================	  \\
+		System.out.println("================================================");//										   	 	   -								
 		System.out.println("              ~Main Menu~                		");
 		System.out.println("------------------------------------------------");
 		System.out.println("1: Create component  							");
 		System.out.println("2: Create memory and assign it to a component	");
 		System.out.println("3: toString() all								");
-		System.out.println("4: List all										");
-		System.out.println("5: List one										");
-		System.out.println("6: Exit											");
+		System.out.println("4: toString() specific component				");
+		System.out.println("5: List all										");
+		System.out.println("6: List one										");
+		System.out.println("7: Edit component								");
+		System.out.println("8: Exit											");
 		System.out.println("================================================");
 		
 		//get choice
-		choice = getChoice(6);
+		choice = getChoice(7);
 			
 		//move on
 		if(choice == 1)
 			createComponentMenu();
+			
 		else if(choice == 2)
 			createMemory();
+			
 		else if(choice == 3){
 			System.out.println(cDB.toString());
 			System.out.print("Press enter to continue");
 			input.nextLine();
+			
 		}else if(choice == 4){
+			
+			int componentNum;
+						
+			if (cDB.listAll()!="No components") {
+				System.out.println(cDB.listAll() + "\n-----------------------------\n" + "Which component will be toString()'ed?\n");
+				//componentNum = getChoice(cDB.getLength());
+				do{
+					componentNum = getChoice(cDB.motherboard.length);
+					if(cDB.motherboard[componentNum-1] == null){
+						System.out.print("Please choose a number from the above list\n");
+					}else{
+						System.out.println(cDB.motherboard[componentNum-1].toString());
+						System.out.print("\nPress enter to continue");
+						input.nextLine();
+					}
+				
+				}while(cDB.motherboard[componentNum-1] == null);
+			}
+		}else if(choice == 5){
 			System.out.println(cDB.listAll() + "\nPress enter to continue");
 			input.nextLine();
-		}else if(choice == 5){
+			
+		}else if(choice == 6){
 			int i;
 			
 			System.out.print("Which index? (Starting from 1)\n");
@@ -63,7 +87,10 @@ public class Menu {
 			
 			System.out.print("Press enter to continue");
 			input.nextLine();
-		}else if(choice == 6)
+			
+		}else if(choice == 7){
+			
+		}else if(choice == 8)
 			exit = true;
 	}
 
@@ -173,32 +200,37 @@ public class Menu {
 		
 		int componentNum = -1;
 		
-		if (cDB.listAll()!="") {
+		if (cDB.listAll()!="No components") {
 			System.out.println(cDB.listAll() + "\n-----------------------------\n" + "Which component will this memory be stored in?");
 			//componentNum = getChoice(cDB.getLength());
-			componentNum = getChoice(cDB.motherboard.length);
-			System.out.print("Memory name (String): ");
-			memName = input.nextLine();
-			System.out.print("File Type (String): ");
-			memFileType = input.nextLine();
-			
-			
 			do{
-				System.out.println("Enter data that is <=" + cDB.motherboard[componentNum-1].getMaxSize() + " bytes, or \"cancel\" to cancel: ");
-				
-				if (memFileType.equalsIgnoreCase("Image"))
-					memData = getImage();
-				else
-					memData = input.nextLine();
-				
-				if(memData.length() <= cDB.motherboard[componentNum - 1].getMaxSize()){
-					memTemp = new MemoryBlock(memName, memFileType, memData);
-					cDB.motherboard[componentNum - 1].setMemory(memTemp);
+				componentNum = getChoice(cDB.motherboard.length);
+				if(cDB.motherboard[componentNum-1] == null){
+					System.out.print("Please choose a number from the above list: ");
+				}else{
+					System.out.print("Memory name (String): ");
+					memName = input.nextLine();
+					System.out.print("File Type (String): ");
+					memFileType = input.nextLine();
+					
+					do{
+						System.out.println("Enter data that is <=" + cDB.motherboard[componentNum-1].getMaxSize() + " bytes, or \"cancel\" to cancel: ");
+
+						if (memFileType.equalsIgnoreCase("Image"))
+							memData = getImage();
+						else
+							memData = input.nextLine();
+
+						if(memData.length() <= cDB.motherboard[componentNum - 1].getMaxSize()){
+							memTemp = new MemoryBlock(memName, memFileType, memData);
+							cDB.motherboard[componentNum - 1].setMemory(memTemp);
+						}
+						//else
+						//System.out.println("Enter data that is less than " + compMaxSize + " bytes: ");
+					}while (memData.length() > cDB.motherboard[componentNum - 1].getMaxSize() && !memData.equalsIgnoreCase("cancel"));
 				}
-				//else
-					//System.out.println("Enter data that is less than " + compMaxSize + " bytes: ");
-			}while (memData.length() > cDB.motherboard[componentNum - 1].getMaxSize() && !memData.equalsIgnoreCase("cancel"));
-			
+				
+			}while(cDB.motherboard[componentNum-1] == null);
 			
 	//		if (memFileType.equalsIgnoreCase("Image"))
 	//			memData = getImage();
