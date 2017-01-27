@@ -31,11 +31,13 @@ public class Menu {
 		System.out.println("5: List all										");
 		System.out.println("6: List one										");
 		System.out.println("7: Edit component								");
-		System.out.println("8: Exit											");
+		System.out.println("8: Remove component								");
+		System.out.println("9: Remove memory								");
+		System.out.println("10: Exit										");
 		System.out.println("================================================");
 		
 		//get choice
-		choice = getChoice(7);
+		choice = getChoice(10);
 			
 		//move on
 		if(choice == 1)
@@ -67,6 +69,10 @@ public class Menu {
 					}
 				
 				}while(cDB.motherboard[componentNum-1] == null);
+			}else{
+				System.out.print("No components -- Make one first");
+				System.out.print("\nPress enter to continue");
+				input.nextLine();
 			}
 		}else if(choice == 5){
 			System.out.println(cDB.listAll() + "\nPress enter to continue");
@@ -89,8 +95,12 @@ public class Menu {
 			input.nextLine();
 			
 		}else if(choice == 7){
-			
-		}else if(choice == 8)
+			editComponentMenu();
+		}else if(choice == 8){
+			removeComponent();
+		}else if(choice == 9){
+			removeMemory();
+		}else if(choice == 10)
 			exit = true;
 	}
 
@@ -129,8 +139,10 @@ public class Menu {
 		System.out.print("Brand: ");
 		compBrand = input.nextLine();
 		
-		System.out.print("Max memory size (int): ");
-		compMaxSize = input.nextInt();
+		do {
+			System.out.print("Max memory size (int > 0)\nNote... newline characters (image filetype) take up bytes: ");
+			compMaxSize = input.nextInt();
+		} while (!(compMaxSize > 0));
 		
 		System.out.print("Type of component (char): ");
 		compType = input.next(".").charAt(0);
@@ -158,8 +170,10 @@ public class Menu {
 		System.out.print("Brand: ");
 		compBrand = input.nextLine();
 		
-		System.out.print("Max memory size (int): ");
-		compMaxSize = input.nextInt();
+		do {
+			System.out.print("Max memory size (int > 0)\nNote... newline characters (image filetype) take up bytes: ");
+			compMaxSize = input.nextInt();
+		} while (!(compMaxSize > 0));
 		
 		System.out.print("Type of component (char): ");
 		compType = input.next(".").charAt(0);
@@ -247,6 +261,181 @@ public class Menu {
 		}	
 	}
 
+	public void editComponentMenu(){
+
+		int componentNum;
+					
+		if (cDB.listAll()!="No components") {
+			System.out.println(cDB.listAll() + "\n-----------------------------\n" + "Which component will be edited?\n");
+			//componentNum = getChoice(cDB.getLength());
+			do{
+				componentNum = getChoice(cDB.motherboard.length);
+				if(cDB.motherboard[componentNum-1] == null){
+					System.out.print("Please choose a number from the above list\n");
+				}else{
+					System.out.println(cDB.motherboard[componentNum-1].toString());
+					if (cDB.motherboard[componentNum-1].getMemory() != null) {
+						editComponent(componentNum);
+					}else if(cDB.motherboard[componentNum-1].getMemory() == null)
+						editComponentNoMem(componentNum);
+				}
+			
+			}while(cDB.motherboard[componentNum-1] == null);
+		}else{
+			System.out.print("No components -- Make one first");
+			System.out.print("\nPress enter to continue");
+			input.nextLine();
+		}
+	}
+	
+	public void editComponent(int index){
+		int choice;
+		System.out.println("Edit what value?		");
+		System.out.println("1: Component Name		");
+		System.out.println("2: Component Brand		");
+		System.out.println("3: Component Speed		");
+		System.out.println("4: Component Max Size	");
+		System.out.println("5: Component Type		");
+		System.out.println("6: Memory Name			");
+		System.out.println("7: Memory File Type		");
+		System.out.println("8: Memory Data			");
+		
+		choice = getChoice(8);
+		
+		if(choice == 1){
+			System.out.print("New name: ");
+			String nm = input.nextLine();
+			cDB.motherboard[index-1].setName(nm);
+		}else if(choice == 2){
+			System.out.print("New brand: ");
+			String manufacturer = input.nextLine();
+			cDB.motherboard[index-1].setBrand(manufacturer);
+		}else if(choice == 3){
+			System.out.print("New speed: ");
+			int spd = input.nextInt();
+			cDB.motherboard[index-1].setSpeed(spd);
+		}else if(choice == 4){
+			
+			int maxSize;
+			do{
+				System.out.println("New size (cannot be <" + cDB.motherboard[index-1].getMemSize() + " bytes, or change memory first. Negative to cancel:");
+				maxSize = input.nextInt();
+				
+				if(maxSize < 0)
+					break;
+				else if(!(maxSize < cDB.motherboard[index - 1].getMemSize()))
+					cDB.motherboard[index - 1].setMaxSize(maxSize);
+			}while (maxSize < cDB.motherboard[index-1].getMemSize());
+			
+		}else if(choice == 5){
+			System.out.print("New type: ");
+			char whatComponent = input.next(".").charAt(0);
+			cDB.motherboard[index-1].setType(whatComponent);
+		}else if(choice == 6){
+			System.out.print("New memory name: ");
+			String nm = input.nextLine();
+			cDB.motherboard[index-1].setMemName(nm);
+		}else if(choice == 7){
+			System.out.print("New memory file type: ");
+			String whatMemory = input.nextLine();
+			cDB.motherboard[index-1].setMemFileType(whatMemory);
+		}else if(choice == 8){
+			String memFileType;
+			String memData;
+			System.out.print("File Type (String): ");
+			memFileType = input.nextLine();
+			//Check if data being entered into the component is small enough
+			do {
+				System.out.println("Enter data that is <= " + cDB.motherboard[index-1].getMaxSize() + " bytes, or \"cancel\" to cancel: ");
+
+				if (memFileType.equalsIgnoreCase("Image"))
+					memData = getImage();
+				else
+					memData = input.nextLine();
+
+				if (memData.length() <= cDB.motherboard[index-1].getMaxSize())
+					cDB.addComponent(index-1, cDB.motherboard[index-1].getName(), cDB.motherboard[index-1].getBrand(), cDB.motherboard[index-1].getSpeed(), cDB.motherboard[index-1].getMaxSize(), cDB.motherboard[index-1].getType(),
+							cDB.motherboard[index-1].getMemName(), memFileType, memData);
+				//else
+				//System.out.println("Enter data that is less than " + compMaxSize + " bytes: ");
+			} while (memData.length() > cDB.motherboard[index-1].getMaxSize() && !memData.equalsIgnoreCase("cancel"));
+		}
+	}
+	
+	public void editComponentNoMem(int index){
+		int choice;
+		System.out.println("Edit what value?		");
+		System.out.println("1: Component Name		");
+		System.out.println("2: Component Brand		");
+		System.out.println("3: Component Speed		");
+		System.out.println("4: Component Max Size	");
+		System.out.println("5: Component Type		");
+		
+		choice = getChoice(5);
+		
+		if(choice == 1){
+			System.out.print("New name: ");
+			String nm = input.nextLine();
+			cDB.motherboard[index-1].setName(nm);
+		}else if(choice == 2){
+			System.out.print("New brand: ");
+			String manufacturer = input.nextLine();
+			cDB.motherboard[index-1].setBrand(manufacturer);
+		}else if(choice == 3){
+			System.out.print("New speed: ");
+			int spd = input.nextInt();
+			cDB.motherboard[index-1].setSpeed(spd);
+		}else if(choice == 4){
+			
+			int maxSize;
+			
+				System.out.println("New size (negative to cancel):");
+				maxSize = input.nextInt();
+				
+				if(!(maxSize < 0))
+					cDB.motherboard[index - 1].setMaxSize(maxSize);
+			
+		}else if(choice == 5){
+			System.out.print("New type: ");
+			char whatComponent = input.next(".").charAt(0);
+			cDB.motherboard[index-1].setType(whatComponent);
+		}
+	}
+	
+	public void removeComponent(){
+		int choice;
+		
+		System.out.println(cDB.listAll());
+		
+		do {
+			System.out.println("Which component to remove?");
+			choice = getChoice(cDB.motherboard.length);
+			
+			if(cDB.motherboard[choice-1] == null)
+				System.out.println("Select a number shown above");	
+			
+		}while (cDB.motherboard[choice-1] == null);
+		
+		cDB.motherboard[choice-1] = null;
+	}
+	
+	public void removeMemory(){
+		int choice;
+		
+		System.out.println(cDB.listAll());
+		
+		do {
+			System.out.println("Which component to remove memory from?");
+			choice = getChoice(cDB.motherboard.length);
+			
+			if(cDB.motherboard[choice-1] == null)
+				System.out.println("Select a number shown above");	
+			
+		}while (cDB.motherboard[choice-1] == null);
+		
+		cDB.motherboard[choice-1].setMemory(null);
+	}
+	
 	public int getChoice(int max){
     	int choice;
     	
@@ -269,9 +458,15 @@ public class Menu {
 			str += "\n" + user;
 			System.out.print("Line " + i + ": ");
 			user = input.nextLine();
+			if(user.equalsIgnoreCase("cancel")){
+				str = "cancel";
+				break;
+			}
 		}
-		
-		return str;
+		if(user.equalsIgnoreCase("cancel"))
+			return str;
+		else
+			return str.substring(2);
     }
     
     public boolean getExit(){

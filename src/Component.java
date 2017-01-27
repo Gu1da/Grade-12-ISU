@@ -62,7 +62,7 @@ public class Component {
 		brand = manufacturer;
 	}
 	
-	public void setspeed(double clock){
+	public void setSpeed(double clock){
 		speed = clock;
 	}
 	
@@ -87,7 +87,7 @@ public class Component {
 		return brand;
 	}
 	
-	public double getspeed(){
+	public double getSpeed(){
 		return speed;
 	}
 	

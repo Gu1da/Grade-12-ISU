@@ -23,6 +23,10 @@ public class ComponentDB {
 	public void addComponent(String compName, String compBrand, double compSpeed, int compMaxSize, char compType, String memName, String memFileType, String memData){
 		motherboard[nextFree()] = new Component(compName, compBrand, compSpeed, compMaxSize, compType, memName, memFileType, memData);
 	}
+	
+	public void addComponent(int index, String compName, String compBrand, double compSpeed, int compMaxSize, char compType, String memName, String memFileType, String memData){
+		motherboard[index] = new Component(compName, compBrand, compSpeed, compMaxSize, compType, memName, memFileType, memData);
+	}
 
 	/*
 	public void setMemory(MemoryBlock mem, int index){
