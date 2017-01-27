@@ -33,11 +33,12 @@ public class Menu {
 		System.out.println("7: Edit component								");
 		System.out.println("8: Remove component								");
 		System.out.println("9: Remove memory								");
-		System.out.println("10: Exit										");
+		System.out.println("10: Sort components by max size					");
+		System.out.println("11: Exit										");
 		System.out.println("================================================");
 		
 		//get choice
-		choice = getChoice(10);
+		choice = getChoice(11);
 			
 		//move on
 		if(choice == 1)
@@ -100,7 +101,11 @@ public class Menu {
 			removeComponent();
 		}else if(choice == 9){
 			removeMemory();
-		}else if(choice == 10)
+		}else if(choice == 10){
+			bubbleSort(cDB.motherboard);
+			System.out.println("Done! Press enter to continue");
+			input.nextLine();
+		}else if(choice == 11)
 			exit = true;
 	}
 
@@ -116,92 +121,91 @@ public class Menu {
 		System.out.println("=========================================");
 		
 		//get choice and check
-		choice = getChoice(3);
+		choice = getChoice(2);
 		
 		//move on	
 		if(choice == 1)
 			createComponent();
 		if(choice == 2)
 			createComponentAndMem();
-		if(choice == 3){}
 	}
 
 	public void createComponent(){
-		String compName;
-		String compBrand;
-		double compSpeed;			//In Mhz or Ghz, depending on the memory type
-		int compMaxSize; 				
-		char compType;				//Hdd, Cpu, Gpu, Ram, Ssd
-		
-		System.out.print("Name: ");
-		compName = input.nextLine();
-		
-		System.out.print("Brand: ");
-		compBrand = input.nextLine();
-		
-		do {
-			System.out.print("Max memory size (int > 0)\nNote... newline characters (image filetype) take up bytes: ");
-			compMaxSize = input.nextInt();
-		} while (!(compMaxSize > 0));
-		
-		System.out.print("Type of component (char): ");
-		compType = input.next(".").charAt(0);
-		
-		System.out.print("Clock Speed (double, 0 or less to cancel): ");
-		compSpeed = input.nextDouble();
-		
-		if(compSpeed > 0)
-			cDB.addComponent(compName, compBrand, compSpeed, compMaxSize, compType);
+		if (cDB.nextFree() != -1) {
+			String compName;
+			String compBrand;
+			double compSpeed; //In Mhz or Ghz, depending on the memory type
+			int compMaxSize;
+			char compType; //Hdd, Cpu, Gpu, Ram, Ssd
+			System.out.print("Name: ");
+			compName = input.nextLine();
+			System.out.print("Brand: ");
+			compBrand = input.nextLine();
+			do {
+				System.out.print(
+						"Max memory size (int > 0)\nNote... newline characters (image filetype) take up bytes: ");
+				compMaxSize = input.nextInt();
+			} while (!(compMaxSize > 0));
+			System.out.print("Type of component (char): ");
+			compType = input.next(".").charAt(0);
+			System.out.print("Clock Speed (double, 0 or less to cancel): ");
+			compSpeed = input.nextDouble();
+			if (compSpeed > 0)
+				cDB.addComponent(compName, compBrand, compSpeed, compMaxSize, compType);
+		}else{
+			System.out.println("Out of room, remove components! Press enter to continue...");
+			input.nextLine();
+		}
 	}
 
 	public void createComponentAndMem(){
-		String compName;
-		String compBrand;
-		double compSpeed;			//In Mhz or Ghz, depending on the memory type
-		int compMaxSize; 				
-		char compType;				//Hdd, Cpu, Gpu, Ram, Ssd
-		String memName;
-		String memFileType;
-		String memData;
-		
-		System.out.print("Name: ");
-		compName = input.nextLine();
-		
-		System.out.print("Brand: ");
-		compBrand = input.nextLine();
-		
-		do {
-			System.out.print("Max memory size (int > 0)\nNote... newline characters (image filetype) take up bytes: ");
-			compMaxSize = input.nextInt();
-		} while (!(compMaxSize > 0));
-		
-		System.out.print("Type of component (char): ");
-		compType = input.next(".").charAt(0);
-		
-		System.out.print("Clock Speed (double, 0 or less to cancel): ");
-		compSpeed = input.nextDouble();
-		input.nextLine();
-		
-		if (compSpeed > 0) {
-			System.out.print("Memory name (String): ");
-			memName = input.nextLine();
-			System.out.print("File Type (String): ");
-			memFileType = input.nextLine();
-			//Check if data being entered into the component is small enough
+		if (cDB.nextFree() != -1) {
+			String compName;
+			String compBrand;
+			double compSpeed; //In Mhz or Ghz, depending on the memory type
+			int compMaxSize;
+			char compType; //Hdd, Cpu, Gpu, Ram, Ssd
+			String memName;
+			String memFileType;
+			String memData;
+			System.out.print("Name: ");
+			compName = input.nextLine();
+			System.out.print("Brand: ");
+			compBrand = input.nextLine();
 			do {
-				System.out.println("Enter data that is <= " + compMaxSize + " bytes, or \"cancel\" to cancel: ");
+				System.out.print(
+						"Max memory size (int > 0)\nNote... newline characters (image filetype) take up bytes: ");
+				compMaxSize = input.nextInt();
+			} while (!(compMaxSize > 0));
+			System.out.print("Type of component (char): ");
+			compType = input.next(".").charAt(0);
+			System.out.print("Clock Speed (double, 0 or less to cancel): ");
+			compSpeed = input.nextDouble();
+			input.nextLine();
+			if (compSpeed > 0) {
+				System.out.print("Memory name (String): ");
+				memName = input.nextLine();
+				System.out.print("File Type (String): ");
+				memFileType = input.nextLine();
+				//Check if data being entered into the component is small enough
+				do {
+					System.out.println("Enter data that is <= " + compMaxSize + " bytes, or \"cancel\" to cancel: ");
 
-				if (memFileType.equalsIgnoreCase("Image"))
-					memData = getImage();
-				else
-					memData = input.nextLine();
+					if (memFileType.equalsIgnoreCase("Image"))
+						memData = getImage();
+					else
+						memData = input.nextLine();
 
-				if (memData.length() <= compMaxSize)
-					cDB.addComponent(compName, compBrand, compSpeed, compMaxSize, compType, memName, memFileType,
-							memData);
-				//else
-				//System.out.println("Enter data that is less than " + compMaxSize + " bytes: ");
-			} while (memData.length() > compMaxSize && !memData.equalsIgnoreCase("cancel"));
+					if (memData.length() <= compMaxSize)
+						cDB.addComponent(compName, compBrand, compSpeed, compMaxSize, compType, memName, memFileType,
+								memData);
+					//else
+					//System.out.println("Enter data that is less than " + compMaxSize + " bytes: ");
+				} while (memData.length() > compMaxSize && !memData.equalsIgnoreCase("cancel"));
+			} 
+		}else{
+			System.out.println("Out of room, remove components! Press enter to continue...");
+			input.nextLine();
 		}
 	}
 
@@ -435,6 +439,30 @@ public class Menu {
 		
 		cDB.motherboard[choice-1].setMemory(null);
 	}
+	
+	public void bubbleSort(Component[] components){
+		int k = 0;
+		boolean exchangeMade = true;
+		while ((k < components.length - 1) && exchangeMade){
+			exchangeMade = false;
+			k++;
+			for (int j = 0; j < components.length - k; j++){
+				if(components[j] != null){
+					if (components[j].getMaxSize() > components[cDB.nextNotNullAfterIndex(j)].getMaxSize()){
+						swap(components, j, j + 1);
+						exchangeMade = true;
+					}
+				}
+			}	
+		}
+	}
+	
+	public void swap(Component[] components, int x, int y){
+		Component temp = components[x];
+		components[x] = components[y];
+		components[y] = temp;
+	}
+	
 	
 	public int getChoice(int max){
     	int choice;

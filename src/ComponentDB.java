@@ -38,12 +38,10 @@ public class ComponentDB {
 	    for(int i = 0; i < motherboard.length; i++){
 	    	if(motherboard[i] == null)
 	    		return i;
-	    	if(i == motherboard.length)
-	    		return -1;
 	   	}
-	   	
+	    
 	   	//all else fails
-	   	return -2;
+	   	return -1;
     }
     
     public String listAll(){
@@ -80,6 +78,15 @@ public class ComponentDB {
     	return motherboard.length;
     }
 	*/
+    
+    public int nextNotNullAfterIndex(int index){
+    	for(int i = index + 1; i < motherboard.length; i++){
+    		if(motherboard[i] != null)
+    			return i;
+    	}
+    	
+    	return index;
+    }
     
 	public String toString(){
 		
