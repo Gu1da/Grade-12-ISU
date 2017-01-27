@@ -1,9 +1,12 @@
-/**
- * @(#)Component.java
- *
- *
- * @author 
- * @version 1.00 2017/1/18
+/*
+ * Nicholas Guida
+ * Jan 27th, 2017
+ * Component.java
+ * 
+ * The actual object the array is made of. Each component has its own info
+ * along with a pointer for a MemoryBlock (aggregate class).
+ * It can toString() itself along with the memory, and get/set itself and the memory.
+ * 
  */
 
 

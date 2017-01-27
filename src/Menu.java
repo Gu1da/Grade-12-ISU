@@ -1,6 +1,10 @@
 /*
  * Nicholas Guida
- * Jan 23
+ * Jan 27, 2017
+ * Menu.java
+ *
+ * Menu System for the program. Contains the methods to output the different menus.
+ * Holds object cDB which is the component database class, this class contains the actual array
  *
  */
  
@@ -10,6 +14,7 @@
   ADD COMMENTS TO TOP OF ALL FILES
  *********************************/
  
+//The main menu to the program
 public class Menu {
 	Scanner input = new Scanner(System.in);
 	boolean exit = false;
@@ -18,14 +23,8 @@ public class Menu {
 	public void mainMenu(){
 		int choice;
 		this.clearScreen();
-		//====================================================================================================================	   _
-		//=------------------------------------------------------------------------------------------------------------------=	  //
-		//=|								Output menu																		|=	 //
-		//=|	Needs: toString() one, delete component, delete memory, Edit component, Edit memory1						|=	/-------------------------|
-		//=|	Ask if array needs to be private (no), and if components in array/their aggregates need to be edited (yes).	|=	\-------------------------|
-		//=------------------------------------------------------------------------------------------------------------------=	 \\
-		//====================================================================================================================	  \\
-		System.out.println("================================================");//										   	 	   -								
+
+		System.out.println("================================================");									   	 	   								
 		System.out.println("              ~Main Menu~                		");
 		System.out.println("------------------------------------------------");
 		System.out.println("1: Create component  							");
