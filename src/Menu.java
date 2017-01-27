@@ -6,6 +6,10 @@
  
  import java.util.Scanner;
 
+ /*********************************
+  ADD COMMENTS TO TOP OF ALL FILES
+ *********************************/
+ 
 public class Menu {
 	Scanner input = new Scanner(System.in);
 	boolean exit = false;
@@ -357,7 +361,7 @@ public class Menu {
 				else
 					memData = input.nextLine();
 
-				if (memData.length() <= cDB.motherboard[index-1].getMaxSize())
+				if (memData.length() <= cDB.motherboard[index-1].getMaxSize() && !(memData.equalsIgnoreCase("cancel")))
 					cDB.addComponent(index-1, cDB.motherboard[index-1].getName(), cDB.motherboard[index-1].getBrand(), cDB.motherboard[index-1].getSpeed(), cDB.motherboard[index-1].getMaxSize(), cDB.motherboard[index-1].getType(),
 							cDB.motherboard[index-1].getMemName(), memFileType, memData);
 				//else
