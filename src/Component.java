@@ -14,11 +14,12 @@ public class Component {
 
 	private String name;
 	private String brand;
-	private double speed;			//In Mhz or Ghz, depending on the memory type
+	private double speed;			//i.e. The Ghz of a CPU, RPM of a HDD, Mhz of RAM, etc.
 	private int maxSize; 				
-	private char type;				//Hdd, Cpu, Gpu, Ram, Ssd
+	private char type;				//i.e. H would represent HDD, C can represent CPU, etc,
 	private MemoryBlock memory;
 	
+	//Default constructor
     public Component() {
 		name = "";
 		brand = "";
@@ -47,14 +48,6 @@ public class Component {
 		type = componentType;
 		memory = new MemoryBlock(memName, memType, memData);
     }
-    
-    /*
-    public String getSize(){
-    	if(memory != null)
-    		return memory.getSize() + "/" + maxSize + " bytes";
-    	return "0 /" + maxSize + " bytes";
-    }
-	*/
 
 	//Set methods
 	public void setName(String nm){
@@ -107,7 +100,7 @@ public class Component {
 	}
 	
 	//================FOR MEMORY=================
-	//set
+	//Set Methods
 	public void setMemName(String memName){
     	memory.setName(memName);
     }
@@ -124,7 +117,7 @@ public class Component {
     	memory.setData(memData);
     }
 	
-	//get
+	//Get Methods
 	public String getMemName(){
     	return memory.getName();
     }
@@ -141,6 +134,7 @@ public class Component {
     	return memory.getData();
     }
 
+ 
 	public String toString(){
 		String str;
 		

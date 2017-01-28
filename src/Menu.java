@@ -9,16 +9,16 @@
  */
  
  import java.util.Scanner;
-
- /*********************************
-  ADD COMMENTS TO TOP OF ALL FILES
- *********************************/
  
 //The main menu to the program
 public class Menu {
 	Scanner input = new Scanner(System.in);
 	boolean exit = false;
 	ComponentDB cDB = new ComponentDB();
+	
+	public Menu(){
+		
+	}
 	
 	public void mainMenu(){
 		int choice;
@@ -51,9 +51,11 @@ public class Menu {
 			createMemory();
 			
 		else if(choice == 3){
+			
 			System.out.println(cDB.toString());
-			System.out.print("Press enter to continue");
-			input.nextLine();
+			
+			System.out.print("Press enter to continue");	//Allow the user to see the output
+			input.nextLine();								//
 			
 		}else if(choice == 4){
 			
@@ -61,7 +63,8 @@ public class Menu {
 						
 			if (cDB.listAll()!="No components") {
 				System.out.println(cDB.listAll() + "\n-----------------------------\n" + "Which component will be toString()'ed?\n");
-				//componentNum = getChoice(cDB.getLength());
+				
+				//Get the choice of the user, and if it's good activate toString() for that component
 				do{
 					componentNum = getChoice(cDB.motherboard.length);
 					if(cDB.motherboard[componentNum-1] == null){
@@ -72,22 +75,28 @@ public class Menu {
 						input.nextLine();
 					}
 				
-				}while(cDB.motherboard[componentNum-1] == null);
+				}while(cDB.motherboard[componentNum-1] == null);	//Keep trying until the user enters an index containing a component
+				
 			}else{
+				//Tell the user they can't toString() anything when there is nothing to toString()
 				System.out.print("No components -- Make one first");
 				System.out.print("\nPress enter to continue");
 				input.nextLine();
 			}
+			
 		}else if(choice == 5){
+			//List all components/their info and allow the user to see it
 			System.out.println(cDB.listAll() + "\nPress enter to continue");
 			input.nextLine();
 			
+		//List the info to a specific index
 		}else if(choice == 6){
 			int i;
 			
 			System.out.print("Which index? (Starting from 1)\n");
 			i = getChoice(cDB.motherboard.length)- 1;
 			
+			//Prevent null pointers if the component being listed has no memory
 			if(cDB.motherboard[i] != null && cDB.motherboard[i].getMemory() != null)
     			System.out.println((i + 1) + ": " + cDB.motherboard[i].getName() + "---" + cDB.motherboard[i].getMemSize()+ " bytes---Holds: " + cDB.motherboard[i].getMemName());
     		else if(cDB.motherboard[i] != null && cDB.motherboard[i].getMemory() == null)
@@ -100,18 +109,27 @@ public class Menu {
 			
 		}else if(choice == 7){
 			editComponentMenu();
+		
 		}else if(choice == 8){
 			removeComponent();
+		
 		}else if(choice == 9){
 			removeMemory();
+		
 		}else if(choice == 10){
+			//Sort and let the user know
+			
 			bubbleSort(cDB.motherboard);
 			System.out.println("Done! Press enter to continue");
 			input.nextLine();
+		
 		}else if(choice == 11)
+			//Quit the program
+			
 			exit = true;
 	}
 
+	//Output menu for the user to choose how to create the component, and move on appropriately
 	public void createComponentMenu(){
 		int choice;
 		clearScreen();
@@ -132,66 +150,82 @@ public class Menu {
 		if(choice == 2)
 			createComponentAndMem();
 	}
-
+	
+	//Create just the component as long as there is room
 	public void createComponent(){
-		if (cDB.nextFree() != -1) {
+		if (cDB.nextFree() != -1) {	//check if there is a free slot
 			String compName;
 			String compBrand;
-			double compSpeed; //In Mhz or Ghz, depending on the memory type
+			double compSpeed;
 			int compMaxSize;
-			char compType; //Hdd, Cpu, Gpu, Ram, Ssd
+			char compType;
+			
 			System.out.print("Name: ");
 			compName = input.nextLine();
 			System.out.print("Brand: ");
 			compBrand = input.nextLine();
-			do {
+			
+			//Ask user for the size of memory the component can hold, and ensure it is greater than 0
+			do{
 				System.out.print(
 						"Max memory size (int > 0)\nNote... newline characters (image filetype) take up bytes: ");
 				compMaxSize = input.nextInt();
-			} while (!(compMaxSize > 0));
+			}while (!(compMaxSize > 0));
+			
 			System.out.print("Type of component (char): ");
 			compType = input.next(".").charAt(0);
+			
 			System.out.print("Clock Speed (double, 0 or less to cancel): ");
 			compSpeed = input.nextDouble();
+			
 			if (compSpeed > 0)
 				cDB.addComponent(compName, compBrand, compSpeed, compMaxSize, compType);
-		}else{
+			
+		}else {
 			System.out.println("Out of room, remove components! Press enter to continue...");
 			input.nextLine();
 		}
 	}
 
+	//Get the new component's info from the user along with the memory's info
 	public void createComponentAndMem(){
 		if (cDB.nextFree() != -1) {
 			String compName;
 			String compBrand;
-			double compSpeed; //In Mhz or Ghz, depending on the memory type
+			double compSpeed;
 			int compMaxSize;
-			char compType; //Hdd, Cpu, Gpu, Ram, Ssd
+			char compType;
 			String memName;
 			String memFileType;
 			String memData;
+			
 			System.out.print("Name: ");
 			compName = input.nextLine();
+			
 			System.out.print("Brand: ");
 			compBrand = input.nextLine();
-			do {
+			
+			do{
 				System.out.print(
 						"Max memory size (int > 0)\nNote... newline characters (image filetype) take up bytes: ");
 				compMaxSize = input.nextInt();
-			} while (!(compMaxSize > 0));
+			}while (!(compMaxSize > 0));
+			
 			System.out.print("Type of component (char): ");
 			compType = input.next(".").charAt(0);
+			
 			System.out.print("Clock Speed (double, 0 or less to cancel): ");
 			compSpeed = input.nextDouble();
+			
 			input.nextLine();
-			if (compSpeed > 0) {
+			if (compSpeed > 0){
 				System.out.print("Memory name (String): ");
 				memName = input.nextLine();
 				System.out.print("File Type (String): ");
 				memFileType = input.nextLine();
+				
 				//Check if data being entered into the component is small enough
-				do {
+				do{
 					System.out.println("Enter data that is <= " + compMaxSize + " bytes, or \"cancel\" to cancel: ");
 
 					if (memFileType.equalsIgnoreCase("Image"))
@@ -202,9 +236,8 @@ public class Menu {
 					if (memData.length() <= compMaxSize)
 						cDB.addComponent(compName, compBrand, compSpeed, compMaxSize, compType, memName, memFileType,
 								memData);
-					//else
-					//System.out.println("Enter data that is less than " + compMaxSize + " bytes: ");
-				} while (memData.length() > compMaxSize && !memData.equalsIgnoreCase("cancel"));
+					
+				}while(memData.length() > compMaxSize && !memData.equalsIgnoreCase("cancel"));
 			} 
 		}else{
 			System.out.println("Out of room, remove components! Press enter to continue...");
@@ -212,6 +245,7 @@ public class Menu {
 		}
 	}
 
+	//Make just a memory block but it must be assigned to a component
 	public void createMemory(){
 		
 		String memName;
@@ -223,7 +257,7 @@ public class Menu {
 		
 		if (cDB.listAll()!="No components") {
 			System.out.println(cDB.listAll() + "\n-----------------------------\n" + "Which component will this memory be stored in?");
-			//componentNum = getChoice(cDB.getLength());
+			
 			do{
 				componentNum = getChoice(cDB.motherboard.length);
 				if(cDB.motherboard[componentNum-1] == null){
@@ -252,49 +286,44 @@ public class Menu {
 				}
 				
 			}while(cDB.motherboard[componentNum-1] == null);
-			
-	//		if (memFileType.equalsIgnoreCase("Image"))
-	//			memData = getImage();
-	//		else {
-	//			System.out.print("Enter the data you wish to store: ");
-	//			memData = input.nextLine();
-	//		}
-			
-			
-			//cDB.setMemory(memTemp, componentNum-1);
+
 		}else{
 			System.out.println("Add a component first. Press enter to continue.");
 			input.nextLine();
 		}	
 	}
 
+	//Output the menu for when the user wants to edit a component and perform the operations
 	public void editComponentMenu(){
 
 		int componentNum;
 					
 		if (cDB.listAll()!="No components") {
 			System.out.println(cDB.listAll() + "\n-----------------------------\n" + "Which component will be edited?\n");
-			//componentNum = getChoice(cDB.getLength());
+
 			do{
 				componentNum = getChoice(cDB.motherboard.length);
 				if(cDB.motherboard[componentNum-1] == null){
 					System.out.print("Please choose a number from the above list\n");
 				}else{
 					System.out.println(cDB.motherboard[componentNum-1].toString());
+					
+					//Show options to edit memory only if the component has it
 					if (cDB.motherboard[componentNum-1].getMemory() != null) {
 						editComponent(componentNum);
 					}else if(cDB.motherboard[componentNum-1].getMemory() == null)
 						editComponentNoMem(componentNum);
 				}
-			
 			}while(cDB.motherboard[componentNum-1] == null);
-		}else{
+			
+		}else {
 			System.out.print("No components -- Make one first");
 			System.out.print("\nPress enter to continue");
 			input.nextLine();
 		}
 	}
 	
+	//Get the part of the component or its memory that the user wishes to edit, and change it
 	public void editComponent(int index){
 		int choice;
 		System.out.println("Edit what value?		");
@@ -313,14 +342,17 @@ public class Menu {
 			System.out.print("New name: ");
 			String nm = input.nextLine();
 			cDB.motherboard[index-1].setName(nm);
+		
 		}else if(choice == 2){
 			System.out.print("New brand: ");
 			String manufacturer = input.nextLine();
 			cDB.motherboard[index-1].setBrand(manufacturer);
+		
 		}else if(choice == 3){
 			System.out.print("New speed: ");
 			int spd = input.nextInt();
 			cDB.motherboard[index-1].setSpeed(spd);
+		
 		}else if(choice == 4){
 			
 			int maxSize;
@@ -338,20 +370,24 @@ public class Menu {
 			System.out.print("New type: ");
 			char whatComponent = input.next(".").charAt(0);
 			cDB.motherboard[index-1].setType(whatComponent);
+		
 		}else if(choice == 6){
 			System.out.print("New memory name: ");
 			String nm = input.nextLine();
 			cDB.motherboard[index-1].setMemName(nm);
+		
 		}else if(choice == 7){
 			System.out.print("New memory file type: ");
 			String whatMemory = input.nextLine();
 			cDB.motherboard[index-1].setMemFileType(whatMemory);
+		
 		}else if(choice == 8){
 			String memFileType;
 			String memData;
 			System.out.print("File Type (String): ");
 			memFileType = input.nextLine();
-			//Check if data being entered into the component is small enough
+			
+			//Check if data being entered into the component is small enough to fit
 			do {
 				System.out.println("Enter data that is <= " + cDB.motherboard[index-1].getMaxSize() + " bytes, or \"cancel\" to cancel: ");
 
@@ -363,12 +399,11 @@ public class Menu {
 				if (memData.length() <= cDB.motherboard[index-1].getMaxSize() && !(memData.equalsIgnoreCase("cancel")))
 					cDB.addComponent(index-1, cDB.motherboard[index-1].getName(), cDB.motherboard[index-1].getBrand(), cDB.motherboard[index-1].getSpeed(), cDB.motherboard[index-1].getMaxSize(), cDB.motherboard[index-1].getType(),
 							cDB.motherboard[index-1].getMemName(), memFileType, memData);
-				//else
-				//System.out.println("Enter data that is less than " + compMaxSize + " bytes: ");
-			} while (memData.length() > cDB.motherboard[index-1].getMaxSize() && !memData.equalsIgnoreCase("cancel"));
+			}while(memData.length() > cDB.motherboard[index-1].getMaxSize() && !memData.equalsIgnoreCase("cancel"));
 		}
 	}
 	
+	//Same as above method, but excludes the options to edit the memory since it has none
 	public void editComponentNoMem(int index){
 		int choice;
 		System.out.println("Edit what value?		");
@@ -380,27 +415,35 @@ public class Menu {
 		
 		choice = getChoice(5);
 		
+		//Change the appropriate variable in the component
 		if(choice == 1){
 			System.out.print("New name: ");
 			String nm = input.nextLine();
+			
 			cDB.motherboard[index-1].setName(nm);
 		}else if(choice == 2){
 			System.out.print("New brand: ");
 			String manufacturer = input.nextLine();
+			
 			cDB.motherboard[index-1].setBrand(manufacturer);
 		}else if(choice == 3){
 			System.out.print("New speed: ");
 			int spd = input.nextInt();
+			
 			cDB.motherboard[index-1].setSpeed(spd);
 		}else if(choice == 4){
 			
+			//Only change the size to something bigger than the memory within it
 			int maxSize;
-			
-				System.out.println("New size (negative to cancel):");
+			do{
+				System.out.println("New size (cannot be <" + cDB.motherboard[index-1].getMemSize() + " bytes, or change memory first. Negative to cancel:");
 				maxSize = input.nextInt();
 				
-				if(!(maxSize < 0))
+				if(maxSize < 0)
+					break;
+				else if(!(maxSize < cDB.motherboard[index - 1].getMemSize()))
 					cDB.motherboard[index - 1].setMaxSize(maxSize);
+			}while (maxSize < cDB.motherboard[index-1].getMemSize());
 			
 		}else if(choice == 5){
 			System.out.print("New type: ");
@@ -409,6 +452,7 @@ public class Menu {
 		}
 	}
 	
+	//Ask the user what component to remove and removes it
 	public void removeComponent(){
 		int choice;
 		
@@ -426,6 +470,7 @@ public class Menu {
 		cDB.motherboard[choice-1] = null;
 	}
 	
+	//ASk the user what component to remove the memory from and removes it
 	public void removeMemory(){
 		int choice;
 		
@@ -443,6 +488,7 @@ public class Menu {
 		cDB.motherboard[choice-1].setMemory(null);
 	}
 	
+	//Sorts the array by the component's max memory size using the Bubble Sort algorithm
 	public void bubbleSort(Component[] components){
 		int k = 0;
 		boolean exchangeMade = true;
@@ -460,13 +506,14 @@ public class Menu {
 		}
 	}
 	
+	//Swap 2 indexes within a given array
 	public void swap(Component[] components, int x, int y){
 		Component temp = components[x];
 		components[x] = components[y];
 		components[y] = temp;
 	}
 	
-	
+	//Get the user's menu choice but also check if it is valid. Max represents the highest number in the menu
 	public int getChoice(int max){
     	int choice;
     	
@@ -482,6 +529,7 @@ public class Menu {
   		return choice;
     }
 	
+	//Starts a proccess so the user can enter in a multi-line String to store in memory
   	public String getImage(){
 		String str = "", user = "";
 		
@@ -500,19 +548,23 @@ public class Menu {
 			return str.substring(2);
     }
     
+  	//Get Methods
     public boolean getExit(){
     	return exit;
     }
     
+    //Set Methods
     public void setExit(boolean leave){
 		exit = leave;
 	}
 
+    //List all the info of the array's components using cDB
 	public String listAll(){
     	String str = cDB.listAll();
     	return str;
     }
 
+	//Pushes the output above the screen
 	public void clearScreen(){
 		System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 	}

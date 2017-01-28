@@ -1,9 +1,11 @@
-/**
- * @(#)MemoryBlock.java
- *
- *
- * @author 
- * @version 1.00 2017/1/18
+/*
+ * Nicholas Guida
+ * MemoryBlock.java
+ * Jan 27, 2017
+ * 
+ * The aggregate class. Has a few variables for its name and what it holds. Also has a variable to hold the data that is to be
+ * held by the component, along with the size of that memory to compare it with the max size the component can hold.
+ * 
  */
 
 
@@ -14,6 +16,7 @@ public class MemoryBlock {
 	private int size;
 	private String data;
 
+	//Create memory via user input
     public MemoryBlock(String nm, String fileClass, String info) {
     	name = nm;
     	fileType = fileClass;	
@@ -21,7 +24,7 @@ public class MemoryBlock {
     	size = data.length();
     }
     
-    //set
+    //Set Methods
     public void setName(String nm){
     	name = nm;
     }
@@ -38,7 +41,7 @@ public class MemoryBlock {
     	data = info;
     }
     
-    //get
+    //Get Methods
     public String getName(){
     	return name;
     }
@@ -55,6 +58,7 @@ public class MemoryBlock {
     	return data;
     }
 
+    //toString, return a String of all the variables in this MemoryBlock
 	public String toString(){
 		String str;
 		
